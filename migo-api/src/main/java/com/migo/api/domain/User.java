@@ -1,4 +1,4 @@
-package migo.api.domain;
+package com.migo.api.domain;
 
 public class User {
 	private long id;
