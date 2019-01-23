@@ -1,6 +1,10 @@
 package com.migo.api.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User {
+
 	private long id;
 	private String name;
 	private String password;
