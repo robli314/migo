@@ -6,13 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.migo.api.domain.User;
@@ -37,7 +35,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
-	@ResponseStatus(HttpStatus.OK)
+	//@ResponseStatus(HttpStatus.OK) means the request will return OK, if the handling method returns normally. ( This
+	// annotation is redundant in that cases, as the default response status is HttpStatus.OK)
 	@ApiOperation(value = "Get a single user.", notes = "You have to provide a valid user ID.")
 	public @ResponseBody User getUser(
 			@ApiParam(value = "The ID of the user.", required = true) @PathVariable("id") Long id,
