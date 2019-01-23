@@ -30,13 +30,9 @@ public class UserController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-	public UserController() {
-
-	}
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	//@ResponseStatus(HttpStatus.OK) means the request will return OK, if the handling method returns normally. ( This
-	// annotation is redundant in that cases, as the default response status is HttpStatus.OK)
+	// annotation is redundant in that case, as the default response status is HttpStatus.OK)
 	@ApiOperation(value = "Get a single user.", notes = "You have to provide a valid user ID.")
 	public @ResponseBody User getUser(
 			@ApiParam(value = "The ID of the user.", required = true) @PathVariable("id") Long id,
