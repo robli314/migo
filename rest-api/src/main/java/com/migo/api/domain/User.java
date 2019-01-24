@@ -2,28 +2,30 @@ package com.migo.api.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.springframework.data.annotation.Id;
+
 @XmlRootElement
 public class User {
-
-	private long id;
+	@Id
+	private Long id;
 	private String name;
 	private String password;
 
 	public User() {
 	}
 
-	public User(long id, String name, String password) {
+	public User(Long id, String name, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
