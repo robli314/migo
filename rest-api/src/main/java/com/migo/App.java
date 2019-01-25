@@ -1,6 +1,4 @@
-/**
- * This class is the main Spring Boot application class.
- */
+
 package com.migo;
 
 import javax.servlet.Filter;
@@ -16,7 +14,12 @@ import org.springframework.context.annotation.Bean;
 
 import com.migo.security.JwtFilter;
 
-
+/**
+ * This class is the main Spring Boot application class.
+ * 
+ * @author orobsonpires Jan 25, 2019
+ * 
+ */
 @SpringBootApplication
 public class App extends SpringBootServletInitializer {
 
@@ -38,16 +41,15 @@ public class App extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(App.class);
 	}
-	
+
 	@Bean
 	public FilterRegistrationBean<Filter> jwtFilter() {
 		final FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();
-		
+
 		registrationBean.setFilter(new JwtFilter());
 		registrationBean.addUrlPatterns("/secure/*");
 
 		return registrationBean;
 	}
-	
-	
+
 }

@@ -4,6 +4,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * 
+ * @author orobsonpires
+ * Jan 25, 2019
+ */
 @Document(collection = "users")
 public class User {
 

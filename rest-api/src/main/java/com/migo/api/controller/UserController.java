@@ -26,6 +26,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * 
+ * @author orobsonpires Jan 25, 2019
+ */
 @RestController
 @RequestMapping(value = "/users")
 @Api(tags = { "users" })

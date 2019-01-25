@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import com.migo.api.domain.User;
 import com.migo.dao.IUserRepository;
 
+/**
+ * 
+ * @author orobsonpires Jan 25, 2019
+ */
 @Service
 public class UserService implements IUserService {
 

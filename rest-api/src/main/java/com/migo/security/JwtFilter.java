@@ -1,3 +1,4 @@
+
 package com.migo.security;
 
 import java.io.IOException;
@@ -15,6 +16,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 
+/**
+ * This filter class will be used to protect our 'secure' endpoints, and it was
+ * based on https://aboullaite.me/spring-boot-token-authentication-using-jwt/
+ * 
+ * @author orobsonpires Jan 25, 2019
+ */
 public class JwtFilter extends GenericFilterBean {
 
 	@Override
@@ -40,7 +47,7 @@ public class JwtFilter extends GenericFilterBean {
 			try {
 				final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
 				request.setAttribute("claims", claims);
-				
+
 			} catch (final SignatureException e) {
 				throw new ServletException("Invalid token");
 			}
