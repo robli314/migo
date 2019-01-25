@@ -9,7 +9,7 @@ import com.migo.api.domain.User;
 import com.migo.dao.IUserRepository;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
@@ -20,7 +20,13 @@ public class UserService {
 		LOG.debug("User service was injected.");
 	}
 
+	@Override
 	public User getUser(Long id) {
 		return userRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public User findByName(String name) {
+		return userRepository.findUserByName(name);
 	}
 }

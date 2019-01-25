@@ -1,11 +1,20 @@
 package com.migo.api.domain;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@XmlRootElement
+@Document(collection = "users")
 public class User {
+
+	/*
+	 * That is an unique reference to auto-incremented sequence for the user
+	 * collection. It's annotated with @Transient in order to avoid being persisted
+	 * alongside other properties.
+	 */
+	@Transient
+	public static final String SEQUENCE_NAME = "users_sequence";
+
 	@Id
 	private Long id;
 	private String name;
@@ -44,5 +53,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 }
