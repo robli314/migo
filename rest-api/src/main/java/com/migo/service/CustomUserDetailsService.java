@@ -13,20 +13,17 @@ import com.migo.dao.UsersRepositoty;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-	
+
 	@Autowired
 	private UsersRepositoty usersRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		ApplicationUser applicationUser = loadApplicationUserByUsername(username);
-		
-		return new User(applicationUser.getUsername(), applicationUser.getPassword(), AuthorityUtils.createAuthorityList("ROLE_USER"));
-	}
-	
-	public ApplicationUser loadApplicationUserByUsername(String username) {
-		return usersRepository.findByUsername(username);
+		ApplicationUser applicationUser = usersRepository.findByUsername(username);
+
+		return new User(applicationUser.getUsername(), "{noop}"+applicationUser.getPassword(),
+				AuthorityUtils.createAuthorityList("ROLE_USER"));
 	}
 
 }
