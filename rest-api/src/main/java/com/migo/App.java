@@ -1,18 +1,12 @@
 
 package com.migo;
 
-import javax.servlet.Filter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-
-import com.migo.security.JwtFilter;
 
 /**
  * This class is the main Spring Boot application class.
@@ -40,16 +34,6 @@ public class App extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(App.class);
-	}
-
-	@Bean
-	public FilterRegistrationBean<Filter> jwtFilter() {
-		final FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();
-
-		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/secure/*");
-
-		return registrationBean;
 	}
 
 }
