@@ -32,7 +32,6 @@ import com.migo.api.domain.ApplicationUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 /**
  * This filter class will be used to protect our 'secure' endpoints, and it was
  * based on https://aboullaite.me/spring-boot-token-authentication-using-jwt/
@@ -54,13 +53,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		try {
-			ApplicationUser applicationUser = new ObjectMapper().readValue(request.getInputStream(), ApplicationUser.class);
+			ApplicationUser applicationUser = new ObjectMapper().readValue(request.getInputStream(),
+					ApplicationUser.class);
 
 			LOG.debug("Requested token for: " + applicationUser.getUsername());
 
-			return authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(applicationUser.getUsername(), applicationUser.getPassword()));
-		//TODO Is that the best way to handler exceptions?
+			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					applicationUser.getUsername(), applicationUser.getPassword()));
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -75,6 +75,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = Jwts.builder().setSubject(((User) authResult.getPrincipal()).getUsername())
 				.setExpiration(Date.from(expirationTimeUTC.toInstant())).signWith(SignatureAlgorithm.HS256, SECRET)
 				.compact();
+
+		LOG.debug("JWT generated: " + token);
 
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 	}
