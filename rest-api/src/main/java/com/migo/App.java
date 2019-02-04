@@ -31,7 +31,7 @@ public class App extends SpringBootServletInitializer {
 	}
 
 	// used when deploy to a standalone servlet container
-	@Override
+	@Override 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(App.class);
 	}
