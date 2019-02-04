@@ -28,6 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.migo.api.domain.ApplicationUser;
+import com.migo.exception.RecordNotFoundException;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -56,12 +57,35 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			ApplicationUser applicationUser = new ObjectMapper().readValue(request.getInputStream(),
 					ApplicationUser.class);
 
-			LOG.debug("Requested token for: " + applicationUser.getUsername());
+			LOG.debug("Requested token for: " + applicationUser.getEmail());
 
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					applicationUser.getUsername(), applicationUser.getPassword()));
+			return authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(applicationUser.getEmail(), applicationUser.getPassword()));
 
 		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (Exception e) {
+			/*
+			 * For while I keep that solution until find better. The issue is, the provider
+			 * in Spring security is handler my RecordNotFoundException and re-thrown as
+			 * InternalAuthenticationServiceException and I am not able to catch that
+			 * exception in my CustomezedResponseEntityExcep, in order to delivery a better
+			 * error response to the client, instead of only delivery some kind of generic
+			 * server error.
+			 * 
+			 * The question was already raised 2+ in stackoverflow, but it seems there not
+			 * really good solution for that situation.
+			 * 
+			 * Links:
+			 * https://stackoverflow.com/questions/39789408/how-to-handle-spring-security-
+			 * internalauthenticationserviceexception-thrown-in-s?answertab=votes#tab-top
+			 * 
+			 * https://stackoverflow.com/questions/54521967/not-able-to-handler-
+			 * internalauthenticationserviceexception-in-spring-security
+			 */
+			if (e.getCause() instanceof RecordNotFoundException) {
+				throw new RecordNotFoundException(e.getMessage());
+			}
 			throw new RuntimeException(e);
 		}
 	}

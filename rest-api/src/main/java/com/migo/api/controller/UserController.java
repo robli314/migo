@@ -18,14 +18,14 @@ import com.migo.service.CustomUserDetailsService;
  * @author orobsonpires Jan 25, 2019
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("api/private/user")
 public class UserController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 
-	@GetMapping("/private/{id}")
+	@GetMapping("/{id}")
 	public @ResponseBody ApplicationUser getUserById(@PathVariable String id) {
 
 		LOG.debug(SecurityContextHolder.getContext().getAuthentication().toString());

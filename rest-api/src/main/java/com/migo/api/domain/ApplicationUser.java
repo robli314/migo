@@ -2,24 +2,27 @@ package com.migo.api.domain;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
 public class ApplicationUser {
 	@Id
 	private ObjectId id;
-	private String username;
+	// That's the username.
+	@Indexed(unique = true)
+	private String email;
 	private String password;
-
-	public ApplicationUser(ObjectId id, String username, String password) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
 
 	public ApplicationUser() {
 		super();
+	}
+
+	public ApplicationUser(ObjectId id, String email, String password) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
 	}
 
 	public ObjectId getId() {
@@ -30,12 +33,12 @@ public class ApplicationUser {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

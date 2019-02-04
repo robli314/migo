@@ -1,13 +1,10 @@
 package com.migo.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.migo.api.domain.ApplicationUser;
@@ -21,27 +18,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UsersRepositoty usersRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws RecordNotFoundException {
 
-		ApplicationUser applicationUser = usersRepository.findByUsername(username);
+		
+		ApplicationUser applicationUser = usersRepository.findByEmail(email).orElseThrow(
+				() -> new RecordNotFoundException("Ops! It seems there's no user with that E-Mail: " + email));
 
 		/*
 		 * https://stackoverflow.com/questions/46999940/spring-boot-passwordencoder-
 		 * error
 		 */
-		return new User(applicationUser.getUsername(), "{noop}" + applicationUser.getPassword(),
+		return new User(applicationUser.getEmail(), "{noop}" + applicationUser.getPassword(),
 				AuthorityUtils.createAuthorityList("ROLE_USER"));
 	}
 
 	public ApplicationUser findUserById(String id) throws RecordNotFoundException {
 
-		Optional<ApplicationUser> applicationUser = usersRepository.findById(id);
+		ApplicationUser applicationUser = usersRepository.findById(id)
+				.orElseThrow(() -> new RecordNotFoundException("Ops! It seems there's no user with ID: " + id));
 
-		if (!applicationUser.isPresent()) {
-			throw new RecordNotFoundException("Ops! It seems there's no user with ID: " + id);
-		}
-
-		return applicationUser.get();
+		return applicationUser;
 	}
 
 }
