@@ -1,3 +1,11 @@
+/**
+ * This class is mapping specific HTTP status code to an exception 
+ * by creating a controller ControllerAdvice and wrap them to {@link ResponseEntity}, 
+ * in other to make the client make a good decision in the usage of the api.
+ * 
+ * @author orobsonpires Jan 25, 2019
+ * 
+ */
 package com.migo.exception;
 
 import java.util.Date;

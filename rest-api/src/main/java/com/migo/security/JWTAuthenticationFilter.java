@@ -64,29 +64,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		} catch (Exception e) {
-			/*
-			 * For while I keep that solution until find better. The issue is, the provider
-			 * in Spring security is handler my RecordNotFoundException and re-thrown as
-			 * InternalAuthenticationServiceException and I am not able to catch that
-			 * exception in my CustomezedResponseEntityExcep, in order to delivery a better
-			 * error response to the client, instead of only delivery some kind of generic
-			 * server error.
-			 * 
-			 * The question was already raised 2+ in stackoverflow, but it seems there not
-			 * really good solution for that situation.
-			 * 
-			 * Links:
-			 * https://stackoverflow.com/questions/39789408/how-to-handle-spring-security-
-			 * internalauthenticationserviceexception-thrown-in-s?answertab=votes#tab-top
-			 * 
-			 * https://stackoverflow.com/questions/54521967/not-able-to-handler-
-			 * internalauthenticationserviceexception-in-spring-security
-			 */
-			if (e.getCause() instanceof RecordNotFoundException) {
-				throw new RecordNotFoundException(e.getMessage());
-			}
-			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+
+		if (failed.getCause() instanceof RecordNotFoundException) {
+			response.sendError((HttpServletResponse.SC_NOT_FOUND), failed.getMessage());
 		}
 	}
 
