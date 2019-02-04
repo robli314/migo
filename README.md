@@ -1,2 +1,2 @@
-# migo RestFull API using Spring Boot and MongoDB.
+# migo restFULL API using Spring Boot and MongoDB.
 
