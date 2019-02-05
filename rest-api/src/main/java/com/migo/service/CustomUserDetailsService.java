@@ -20,7 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws RecordNotFoundException {
 
-		
 		ApplicationUser applicationUser = usersRepository.findByEmail(email).orElseThrow(
 				() -> new RecordNotFoundException("Ops! It seems there's no user with that E-Mail: " + email));
 
@@ -33,11 +32,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 	public ApplicationUser findUserById(String id) throws RecordNotFoundException {
-
-		ApplicationUser applicationUser = usersRepository.findById(id)
+		return usersRepository.findById(id)
 				.orElseThrow(() -> new RecordNotFoundException("Ops! It seems there's no user with ID: " + id));
-
-		return applicationUser;
 	}
 
 }

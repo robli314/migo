@@ -2,7 +2,6 @@
 package com.migo.security;
 
 import static com.migo.security.SecurityUtils.EXPIRATION_TIME;
-import static com.migo.security.SecurityUtils.HEADER_STRING;
 import static com.migo.security.SecurityUtils.SECRET;
 import static com.migo.security.SecurityUtils.TOKEN_PREFIX;
 
@@ -17,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +34,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
- * This filter class will be used to protect our 'secure' endpoints, and it was
+ * This filter class will be used to protect our 'private' endpoints, and it was
  * based on https://aboullaite.me/spring-boot-token-authentication-using-jwt/
  * 
  * @author orobsonpires Jan 25, 2019
@@ -88,7 +88,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		LOG.debug("JWT generated: " + token);
 
-		response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+		// response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+		JSONObject data = new JSONObject();
+		data.put("token", TOKEN_PREFIX + token);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(data.toString());
 	}
 
 }
