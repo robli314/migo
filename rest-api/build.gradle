@@ -30,9 +30,12 @@ dependencies {
     
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    
+    // web security package
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.json:json:20171018'
     
+    // test
     testImplementation 'org.testng:testng:6.14.3'
 }
 

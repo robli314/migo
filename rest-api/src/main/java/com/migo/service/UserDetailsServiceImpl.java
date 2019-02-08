@@ -8,14 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.migo.api.domain.ApplicationUser;
-import com.migo.dao.UsersRepositoty;
+import com.migo.dao.IUsersRepositoty;
 import com.migo.exception.RecordNotFoundException;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UsersRepositoty usersRepository;
+	private IUsersRepositoty usersRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws RecordNotFoundException {

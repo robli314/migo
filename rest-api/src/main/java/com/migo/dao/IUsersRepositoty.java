@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.migo.api.domain.ApplicationUser;
 
 @Repository
-public interface UsersRepositoty extends MongoRepository<ApplicationUser, String> {
+public interface IUsersRepositoty extends MongoRepository<ApplicationUser, String> {
 	Optional<ApplicationUser> findByEmail(String email);
 }

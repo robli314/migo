@@ -90,9 +90,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		// response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 
+		// it sends the token as json, e.g {"token" : "xxxxxxx..."}
 		JSONObject data = new JSONObject();
 		data.put("token", TOKEN_PREFIX + token);
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(data.toString());

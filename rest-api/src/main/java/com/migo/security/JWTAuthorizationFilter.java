@@ -17,7 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.migo.service.CustomUserDetailsService;
+import com.migo.service.UserDetailsServiceImpl;
 
 import io.jsonwebtoken.Jwts;
 
@@ -27,10 +27,10 @@ import io.jsonwebtoken.Jwts;
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final CustomUserDetailsService customUserDetailsService;
+	private final UserDetailsServiceImpl customUserDetailsService;
 
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
-			CustomUserDetailsService customUserDetailsService) {
+			UserDetailsServiceImpl customUserDetailsService) {
 		super(authenticationManager);
 		this.customUserDetailsService = customUserDetailsService;
 	}
